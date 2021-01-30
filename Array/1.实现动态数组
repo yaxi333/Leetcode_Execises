@@ -22,10 +22,6 @@ l.push_back(28) // 在数组末尾插入新元素 28，返回 null
 
 
 
-# 定义一个静态数组（长度不能改变的固定长度的数组，在这里长度为10）
-# 
-# push_back: 在数组末尾添加一个
-
 class LCArray(object):
 
     def __init__(self):
