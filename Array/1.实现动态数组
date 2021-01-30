@@ -1,0 +1,84 @@
+输入：
+["LCArray", "size", "push_back", "pop_back", "size", "push_back", "size", "index", "pop_back", "push_back"]
+[[], [], [95], [], [], [37], [], [0], [], [28]]
+输出：
+[null,0,null,null,0,null,1,37,null,null]
+解释：
+LCArray l = LCArray()
+l.size()        // 获取数组长度，此时数组为空，返回 0
+l.push_back(95) // 在数组末尾插入新元素 95，返回 null
+l.pop_back()    // 删除数组中的最后一个元素，返回 null
+l.size()        // 获取数组长度，此时数组为空，返回 0
+l.push_back(37) // 在数组末尾插入新元素 37，返回 null
+l.size()        // 获取数组长度，返回 1
+l.index(0)      // 返回数组中下标为 0 的元素 37
+l.pop_back()    // 删除数组中的最后一个元素，返回 null
+l.push_back(28) // 在数组末尾插入新元素 28，返回 null
+
+作者：力扣 (LeetCode)
+链接：https://leetcode-cn.com/leetbook/read/high-frequency-algorithm-exercise/x11r3h/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+# 定义一个静态数组（长度不能改变的固定长度的数组，在这里长度为10）
+# 
+# push_back: 在数组末尾添加一个
+
+class LCArray(object):
+
+    def __init__(self):
+        self.static_l = [0]*10 # 定义一个静态数组对象（长度不能改变的固定长度的数组，在这里长度为10）
+        self.ls_size = 0 # 目前数组的长度，初始为0
+        self.capacity = 10 # 数组的容量定义为10
+        
+
+
+    def push_back(self, n):
+        """
+        :type n: int
+        :rtype: None
+        在数组末尾增加一个数，如果数组目前已经满了，则通过扩容（创建新的数组，数组的容量是原来的2倍，将原来的数组复制到新的数组，并在末尾增加新的数）
+        """
+        if self.ls_size == self.capacity: # 数组目前已经满了
+            self.capacity *=2 # 扩容
+            a_list = [0]*self.capacity # 创建新的数组
+            for i in range(self.ls_size):
+                a_list[i] = self.static_l[i] # 复制到新的数组里面
+            self.static_l = a_list # 新的数组是新的静态数组对象
+
+        self.static_l[self.ls_size] = n # 在数组末尾增加新的数，注意：数组是从0开始，所以下一个数的idx 不用长度再+1
+        self.ls_size +=1 # 新加一个数所以目前的数组长度+1
+
+
+    def pop_back(self):
+        """
+        :rtype: None
+        """
+        # self.static_ls[self_ls] = 0 注意： 这样也没有删掉最后一个元素，而是把最后一个元素设为0
+        self.ls_size -=1 # 删除数组中最后一个数，直接长度直接-1就可以了
+        
+
+    def size(self):
+        """
+        :rtype: int
+        """
+        return self.ls_size
+
+
+    def index(self, idx):
+        """
+        :type idx: int
+        :rtype: int
+        """
+        return self.static_l[idx]
+
+
+
+# Your LCArray object will be instantiated and called as such:
+# obj = LCArray()
+# obj.push_back(n)
+# obj.pop_back()
+# param_3 = obj.size()
+# param_4 = obj.index(idx)
